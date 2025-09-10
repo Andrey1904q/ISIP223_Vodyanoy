@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36127.28 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISIP223_Vodyanoy", "ISIP223_Vodyanoy\ISIP223_Vodyanoy.csproj", "{8650030F-3503-40E8-9478-857ABC75F5EA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8650030F-3503-40E8-9478-857ABC75F5EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8650030F-3503-40E8-9478-857ABC75F5EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8650030F-3503-40E8-9478-857ABC75F5EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8650030F-3503-40E8-9478-857ABC75F5EA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {561651A2-6FFB-42B2-9C5B-883E58E0D8A5}
+	EndGlobalSection
+EndGlobal
