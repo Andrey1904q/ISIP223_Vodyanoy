@@ -40,10 +40,10 @@ class Program
             switch (choice)
             {
                 case "1":
-//                   ProcessNewText(history);
+                    ProcessNewText(history);
                     break;
                 case "2":
-//                    ShowHistory(history);
+                    //                  ShowHistory(history);
                     break;
                 case "3":
                     return;
@@ -53,4 +53,18 @@ class Program
             }
         }
     }
+    // Метод для обработки нового текста
+    static void ProcessNewText(List<TextStatistics> history)
+    {
+        string text;
+        // Проверка длины текста (минимум 100 символов)
+        do
+        {
+            Console.WriteLine("\nВведите текст (минимум 100 символов):");
+            text = Console.ReadLine();
+            if (text.Length < 100)
+                Console.WriteLine("Ошибка: текст должен содержать не менее 100 символов!");
+        } while (text.Length < 100);
+    }
 }
+
