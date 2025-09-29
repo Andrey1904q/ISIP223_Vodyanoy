@@ -55,3 +55,58 @@ class Store
                new string('-', 40);
     }
 }
+    class Program
+    {
+        private static List<Store> products = new List<Store>();
+        private static int NextCodeNumber = 1;
+        private static int quantity;
+
+        static void Main(string[] args)
+        {
+            InitializeTestData();
+
+            while (true)
+            {
+                ShowMenu();
+                string choice = Console.ReadLine();
+
+                try
+                {
+                    switch (choice)
+                    {
+                        case "1":
+                            Add();
+                            break;
+                        case "2":
+                            Delete();
+                            break;
+                        case "3":
+                            Order();
+                            break;
+                        case "4":
+                            Sell();
+                            break;
+                        case "5":
+                            Research();
+                            break;
+                        case "6":
+                            Display();
+                            break;
+                        case "0":
+                            Console.WriteLine("Выход из программы. До свидания!");
+                            return;
+                        default:
+                            Console.WriteLine("Неверный выбор. Пожалуйста, выберите пункт от 0 до 6.");
+                            break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Ошибка: {ex.Message}");
+                }
+
+                Console.WriteLine("Нажмите любую клавишу для продолжения...");
+                Console.ReadKey();
+                Console.Clear();
+            }
+        }
