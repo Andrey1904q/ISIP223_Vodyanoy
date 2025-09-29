@@ -147,3 +147,18 @@ class Program
 
         return stats;
     }
+    // Вывод статистики для одного текста
+    static void PrintStatistics(TextStatistics stats)
+    {
+        Console.WriteLine($"Количество слов: {stats.WordCount}");
+        Console.WriteLine($"Самое короткое слово: {stats.ShortestWord} ({stats.ShortestWord.Length} букв)");
+        Console.WriteLine($"Количество предложений: {stats.SentenceCount}");
+        Console.WriteLine($"Гласных букв: {stats.VowelCount}, Согласных: {stats.ConsonantCount}");
+        Console.WriteLine($"Самое длинное слово: {stats.LongestWord} ({stats.LongestWord.Length} букв)");
+
+        Console.WriteLine("Частота встречаемости букв:");
+        foreach (var kvp in stats.LetterFrequency)
+        {
+            Console.WriteLine($"{kvp.Key}: {kvp.Value}");
+        }
+    }
