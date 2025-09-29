@@ -73,10 +73,4 @@ class Program
         Console.WriteLine("\nСтатистика по текущему тексту:");
         PrintStatistics(stats);
     }
-    // Метод анализа текста
-    static TextStatistics AnalyzeText(string text)
-    {
-        TextStatistics stats = new TextStatistics();
-        string currentWord = "";
-        bool inWord = false;
-        string vowels = "аеёиоуыэюя"; 
+    
