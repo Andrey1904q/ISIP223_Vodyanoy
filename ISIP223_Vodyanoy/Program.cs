@@ -156,3 +156,27 @@ class Store
             Console.WriteLine("Количество должно быть неотрицательным целым числом.");
             return;
         }
+        Console.WriteLine("Выберите категорию:");
+        var categories = Enum.GetValues<Category>();
+        for (int i = 0; i < categories.Length; i++)
+        {
+            Console.WriteLine($"{i + 1}. {categories[i]}");
+        }
+
+        Console.Write("Введите номер категории: ");
+        if (!int.TryParse(Console.ReadLine(), out int catChoice) || catChoice < 1 || catChoice > categories.Length)
+        {
+            Console.WriteLine("Неверный выбор категории.");
+            return;
+        }
+
+        Category selectedCategory = categories[catChoice - 1];
+
+        string code = GenerateCode();
+        var product = new Store(code, name, price, quantity, selectedCategory);
+        products.Add(product);
+
+        Console.WriteLine("Товар успешно добавлен:");
+        Console.WriteLine(product);
+    }
+
