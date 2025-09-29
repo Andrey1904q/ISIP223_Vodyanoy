@@ -44,3 +44,14 @@ class Store
         Quantity = quantity;
         Category = category;
     }
+    public override string ToString()
+    {
+        return $"Код: {Code}\n" +
+               $"Название: {Name}\n" +
+               $"Цена: {Price:C}\n" +
+               $"Количество: {Quantity}\n" +
+               $"В наличии: {(IsInStock ? "Да" : "Нет")}\n" +
+               $"Категория: {Category}\n" +
+               new string('-', 40);
+    }
+}
