@@ -121,3 +121,32 @@ class Store
         // Обновляем счётчик кодов
         NextCodeNumber = products.Count + 1;
     }
+    static string GenerateCode()
+    {
+        return "1" + NextCodeNumber++.ToString("D4");
+    }
+
+    static void ShowMenu()
+    {
+        Console.WriteLine("=== УЧЁТ ТОВАРОВ В МАГАЗИНЕ ===");
+        Console.WriteLine("1. Добавить товар");
+        Console.WriteLine("2. Удалить товар");
+        Console.WriteLine("3. Заказать поставку товара");
+        Console.WriteLine("4. Продать товар");
+        Console.WriteLine("5. Поиск товаров");
+        Console.WriteLine("6. Показать все товары");
+        Console.WriteLine("0. Выход");
+        Console.Write("Выберите действие: ");
+    }
+
+    static void Add()
+    {
+        Console.WriteLine("\n--- ДОБАВЛЕНИЕ ТОВАРА ---");
+
+        Console.WriteLine("Введите навзание товара: ");
+        string name = Console.ReadLine()?.Trim();
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            Console.WriteLine("Название не может быть пустым.");
+            return;
+        }
