@@ -90,3 +90,48 @@ class Program
             // Подсчёт предложений (по знакам завершения)
             if (c == '.' || c == '!' || c == '?')
                 stats.SentenceCount++;
+
+            // Проверка является ли символ буквой
+            if (char.IsLetter(c))
+            {
+                // Обработка текущего слова
+                if (!inWord)
+                {
+                    inWord = true;
+                    currentWord = c.ToString();
+                }
+                else
+                {
+                    currentWord += c;
+                }
+
+                // Подсчёт гласных и согласных
+                if (vowels.Contains(lowerC))
+                    stats.VowelCount++;
+                else
+                    stats.ConsonantCount++;
+
+                // Статистика частоты букв
+                if (stats.LetterFrequency.ContainsKey(lowerC))
+                    stats.LetterFrequency[lowerC]++;
+                else
+                    stats.LetterFrequency[lowerC] = 1;
+            }
+            else
+            {
+                // Завершение текущего слова
+                if (inWord)
+                {
+                    inWord = false;
+                    stats.WordCount++;
+
+                    // Обновление данных о самом коротком слове
+                    if (stats.ShortestWord == "" || currentWord.Length < stats.ShortestWord.Length)
+                        stats.ShortestWord = currentWord;
+
+                    // Обновление данных о самом длинном слове
+                    if (currentWord.Length > stats.LongestWord.Length)
+                        stats.LongestWord = currentWord;
+                }
+            }
+        }
