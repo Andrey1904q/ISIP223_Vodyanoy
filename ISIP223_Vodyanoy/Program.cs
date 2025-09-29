@@ -73,4 +73,4 @@ class Program
         Console.WriteLine("\nСтатистика по текущему тексту:");
         PrintStatistics(stats);
     }
-    
+   
