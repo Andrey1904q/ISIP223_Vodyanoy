@@ -150,3 +150,9 @@ class Store
             Console.WriteLine("Название не может быть пустым.");
             return;
         }
+        Console.WriteLine("Введите цену товара: ");
+        if (!decimal.TryParse(Console.ReadLine(), out decimal price) || price < 0)
+        {
+            Console.WriteLine("Количество должно быть неотрицательным целым числом.");
+            return;
+        }
