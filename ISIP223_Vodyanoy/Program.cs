@@ -31,19 +31,7 @@ class Store
         Quantity = quantity;
         Category = category;
     }
-    public Store(string code, string name, decimal price, int quantity, Category category)
-    {
-        Code = code;
-        Name = name ?? throw new ArgumentNullException(nameof(name));
-        if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Название не может быть пустым.");
-        if (price < 0) throw new ArgumentException("Цена не может быть отрицательной.");
-        if (quantity < 0) throw new ArgumentException("Количество не может быть отрицательным.");
 
-        Name = name.Trim();
-        Price = price;
-        Quantity = quantity;
-        Category = category;
-    }
     public override string ToString()
     {
         return $"Код: {Code}\n" +
@@ -55,61 +43,61 @@ class Store
                new string('-', 40);
     }
 }
-    class Program
+class Program
+{
+    private static List<Store> products = new List<Store>();
+    private static int NextCodeNumber = 1;
+    private static int quantity;
+
+    static void Main(string[] args)
     {
-        private static List<Store> products = new List<Store>();
-        private static int NextCodeNumber = 1;
-        private static int quantity;
+        InitializeTestData();
 
-        static void Main(string[] args)
+        while (true)
         {
-            InitializeTestData();
+            ShowMenu();
+            string choice = Console.ReadLine();
 
-            while (true)
+            try
             {
-                ShowMenu();
-                string choice = Console.ReadLine();
-
-                try
+                switch (choice)
                 {
-                    switch (choice)
-                    {
-                        case "1":
-                            Add();
-                            break;
-                        case "2":
-                            Delete();
-                            break;
-                        case "3":
-                            Order();
-                            break;
-                        case "4":
-                            Sell();
-                            break;
-                        case "5":
-                            Research();
-                            break;
-                        case "6":
-                            Display();
-                            break;
-                        case "0":
-                            Console.WriteLine("Выход из программы. До свидания!");
-                            return;
-                        default:
-                            Console.WriteLine("Неверный выбор. Пожалуйста, выберите пункт от 0 до 6.");
-                            break;
-                    }
+                    case "1":
+                        Add();
+                        break;
+                    case "2":
+                        Delete();
+                        break;
+                    case "3":
+                        Order();
+                        break;
+                    case "4":
+                        Sell();
+                        break;
+                    case "5":
+                        Research();
+                        break;
+                    case "6":
+                        Display();
+                        break;
+                    case "0":
+                        Console.WriteLine("Выход из программы. До свидания!");
+                        return;
+                    default:
+                        Console.WriteLine("Неверный выбор. Пожалуйста, выберите пункт от 0 до 6.");
+                        break;
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Ошибка: {ex.Message}");
-                }
-
-                Console.WriteLine("Нажмите любую клавишу для продолжения...");
-                Console.ReadKey();
-                Console.Clear();
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка: {ex.Message}");
+            }
+
+            Console.WriteLine("Нажмите любую клавишу для продолжения...");
+            Console.ReadKey();
+            Console.Clear();
         }
+    }
     static void InitializeTestData()
     {
         products.Add(new Store(GenerateCode(), "Смартфон", 29999.99m, 10, Category.Electronics));
@@ -121,6 +109,7 @@ class Store
         // Обновляем счётчик кодов
         NextCodeNumber = products.Count + 1;
     }
+
     static string GenerateCode()
     {
         return "1" + NextCodeNumber++.ToString("D4");
@@ -179,6 +168,7 @@ class Store
         Console.WriteLine("Товар успешно добавлен:");
         Console.WriteLine(product);
     }
+
     static void Delete()
     {
         Console.WriteLine("\n--- УДАЛЕНИЕ ТОВАРА ---");
@@ -251,6 +241,7 @@ class Store
         product.Quantity -= sellQuantity;
         Console.WriteLine($"Продажа успешно завершена. Остаток: {product.Quantity}");
     }
+
     static void Research()
     {
         Console.WriteLine("\n--- ПОИСК ТОВАРОВ ---");
