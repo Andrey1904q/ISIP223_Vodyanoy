@@ -73,4 +73,20 @@ class Program
         Console.WriteLine("\nСтатистика по текущему тексту:");
         PrintStatistics(stats);
     }
-   
+    // Метод анализа текста
+    static TextStatistics AnalyzeText(string text)
+    {
+        TextStatistics stats = new TextStatistics();
+        string currentWord = "";
+        bool inWord = false;
+        string vowels = "аеёиоуыэюя"; // Русские гласные буквы
+
+        // Проход по каждому символу текста
+        for (int i = 0; i < text.Length; i++)
+        {
+            char c = text[i];
+            char lowerC = char.ToLower(c);
+
+            // Подсчёт предложений (по знакам завершения)
+            if (c == '.' || c == '!' || c == '?')
+                stats.SentenceCount++;
