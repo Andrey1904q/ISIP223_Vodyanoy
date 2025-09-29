@@ -16,8 +16,6 @@ class TextStatistics
     public TextStatistics()
     {
         LetterFrequency = new Dictionary<char, int>();
-        ShortestWord = "";
-        LongestWord = "";
     }
 }
 
@@ -43,7 +41,7 @@ class Program
                     ProcessNewText(history);
                     break;
                 case "2":
-                    //                  ShowHistory(history);
+  //                  ShowHistory(history);
                     break;
                 case "3":
                     return;
@@ -53,6 +51,7 @@ class Program
             }
         }
     }
+
     // Метод для обработки нового текста
     static void ProcessNewText(List<TextStatistics> history)
     {
@@ -65,6 +64,12 @@ class Program
             if (text.Length < 100)
                 Console.WriteLine("Ошибка: текст должен содержать не менее 100 символов!");
         } while (text.Length < 100);
-    }
-}
 
+        // Обработка текста и сохранение статистики
+        TextStatistics stats = AnalyzeText(text);
+        history.Add(stats);
+
+        // Вывод результатов для текущего текста
+        Console.WriteLine("\nСтатистика по текущему тексту:");
+        PrintStatistics(stats);
+    }
