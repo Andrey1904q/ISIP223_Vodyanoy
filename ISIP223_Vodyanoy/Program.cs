@@ -31,5 +31,16 @@ class Store
         Quantity = quantity;
         Category = category;
     }
+    public Store(string code, string name, decimal price, int quantity, Category category)
+    {
+        Code = code;
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+        if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Название не может быть пустым.");
+        if (price < 0) throw new ArgumentException("Цена не может быть отрицательной.");
+        if (quantity < 0) throw new ArgumentException("Количество не может быть отрицательным.");
 
-}
+        Name = name.Trim();
+        Price = price;
+        Quantity = quantity;
+        Category = category;
+    }
