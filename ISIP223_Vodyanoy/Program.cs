@@ -162,3 +162,20 @@ class Program
             Console.WriteLine($"{kvp.Key}: {kvp.Value}");
         }
     }
+    // Показывает историю обработанных текстов
+    static void ShowHistory(List<TextStatistics> history)
+    {
+        if (history.Count == 0)
+        {
+            Console.WriteLine("\nИстория пуста.");
+            return;
+        }
+
+        Console.WriteLine("\nИстория обработанных текстов:");
+        for (int i = 0; i < history.Count; i++)
+        {
+            Console.WriteLine($"\nТекст #{i + 1}:");
+            PrintStatistics(history[i]);
+        }
+    }
+}
