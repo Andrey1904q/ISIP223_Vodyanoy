@@ -135,3 +135,15 @@ class Program
                 }
             }
         }
+        // Проверка на случай, если текст заканчивается словом
+        if (inWord)
+        {
+            stats.WordCount++;
+            if (stats.ShortestWord == "" || currentWord.Length < stats.ShortestWord.Length)
+                stats.ShortestWord = currentWord;
+            if (currentWord.Length > stats.LongestWord.Length)
+                stats.LongestWord = currentWord;
+        }
+
+        return stats;
+    }
