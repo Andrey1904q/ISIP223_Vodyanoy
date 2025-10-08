@@ -48,7 +48,13 @@ class Player : Entity
         MaxHP = 100;
     }
 
-    class 
+    public abstract class Enemy : Entity
+    {
+        public string name { get; set; }
+
+        public abstract void ApplySpecEff(Player player, Random rng);
+    }
+
     }
 
 }
