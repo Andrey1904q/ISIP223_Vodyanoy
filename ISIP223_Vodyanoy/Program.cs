@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 
 public  abstract class Entity 
 
@@ -50,12 +51,32 @@ class Player : Entity
 
     public abstract class Enemy : Entity
     {
-        public string name { get; set; }
+        public string Name { get; set; }
 
         public abstract void ApplySpecEff(Player player, Random rng);
+
+        public Enemy(int maxhp, int hp, int attack, int defence, string name)
+            :base(maxhp,hp, attack, defence)
+        {
+            Name = name;   
+        }
+    public class Goblin : Enemy
+        {
+            public double CritChance { get; set; } = 0.2;
+            public Goblin()
+            {
+                Name = "Гоблин";
+                MaxHP = HP = 30;
+                Attack = 8;
+                Defence = 3;
+            }
+                
+                
+                
+                }
     }
 
-    }
+    
 
-}
+
 
