@@ -22,7 +22,7 @@ public  abstract class Entity
         Attack = attack;
         Defence = defence;
     }
-    public void Heal()
+    public void Heal(int amount)
     {
         HP = Math.Min(MaxHP, HP + amount);
     }
@@ -30,3 +30,26 @@ public  abstract class Entity
     public bool IsAlive => HP > 0;
 
 }
+
+class Player : Entity
+{
+    public string Weapon {  get; set; }
+
+    public string Equip { get; set; }
+
+    public bool IsFrozen { get; set; } = false;
+
+    public Player(int maxhp, int hp, int attack, int defence, string weapon, string equip, bool isfrozen)
+        :base(maxhp, hp, attack, defence)
+    {
+        Weapon = weapon;
+        Equip = equip;
+        IsFrozen = isfrozen;
+        MaxHP = 100;
+    }
+
+    class 
+    }
+
+}
+
