@@ -226,4 +226,5 @@ class Program
             Console.WriteLine($"\nВаш ход.");
             Console.WriteLine();
 
+
 }
