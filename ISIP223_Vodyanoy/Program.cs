@@ -224,7 +224,7 @@ class Program
         {
             turn++;
             Console.WriteLine($"\nВаш ход.");
-            Console.WriteLine();
+            Console.WriteLine("Здоровье: {player.HP}/{player.MaxHP} | Оружие: {player.Weapon} | Броня: {player.Armor}");
 
 
-}
+        }
