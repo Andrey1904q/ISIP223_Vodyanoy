@@ -227,4 +227,5 @@ class Program
             Console.WriteLine("Здоровье: {player.HP}/{player.MaxHP} | Оружие: {player.Weapon} | Броня: {player.Armor}");
 
 
+
         }
