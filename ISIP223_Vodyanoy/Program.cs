@@ -219,14 +219,58 @@ class Program
         Console.WriteLine("добро пожаловать в игру.\n");
         Console.WriteLine("Каждый ход либо сундук либо враг, но каждые 10 ходов будет босс");
         Console.WriteLine("удачи");
-    
-    while (player.IsAlive)
+
+        while (player.IsAlive)
         {
             turn++;
             Console.WriteLine($"\nВаш ход.");
             Console.WriteLine("Здоровье: {player.HP}/{player.MaxHP} | Оружие: {player.Weapon} | Броня: {player.Armor}");
 
+            if (turn % 10 == 0)
+            {
+                Console.WriteLine("\nВнимание. Появился Босс.");
+                Fight(GetRandomBoss());
+            }
+            else
+            {
+                bool isEnemy = rng.Next(2) == 0;
 
+                if (isEnemy)
+                {
+                    var enemy = GetRandomEnemy();
+                    Console.WriteLine($"Вы встретили: {enemy.Name}");
+                    Fight(enemy);
+                }
 
-
+                else
+                {
+                    Console.WriteLine($"Вы нашли сундук.");
+                    OpenChest();
+                }
+            }
+            if (!player.IsAlive)
+            {
+                Console.WriteLine("\nВы погибли. игра окончена");
+                break;
+            }
         }
+        Console.WriteLine("спасибо за игру");
+        Console.ReadKey();
+    }
+
+    static Enemy GetRandomEnemy()
+    {
+        var enemies = new List<Enemy>
+        {
+            new Goblin();
+            new Skeleton();
+            new Mage();
+
+        };
+        return enemies.[rng.Next(enemies.Count)];
+
+    }
+    static Enemy GetRandomBoss()
+    {
+        var 
+    }
