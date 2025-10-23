@@ -11,45 +11,46 @@ public enum Genre
     Novel,
     Story,
     Comedy,
-    Tragedy,
+    Tradegy,
     Fantasy,
     Prose,
     Classic,
     Antiutopia
 }
-
 class Book
 {
     public string ID { get; set; }
     public string Title { get; set; }
     public string Author { get; set; }
-    public string Genre { get; set; }
+    public Genre Genre { get; set; }
     public int Date { get; set; }
     public int Price { get; set; }
 
-public Book (string id, string title, string author, string genre, int date, int price)
-{
-        if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException("ID не может быть пустым");
-        if (string.IsNullOrWhiteSpace(title)) throw new ArgumentException("название не может быть пустым");
-        if (string.IsNullOrWhiteSpace(author)) throw new ArgumentException("книга не может быть без автора");
-        if (price < 0) throw new ArgumentException("цена не может быть отрицательной");
-        if (date < 0 || date > DateTime.Now.Year + 1) throw new ArgumentException("Год изддания неккоректен");
+    // Единственный конструктор
+    public Book(string id, string title, string author, Genre genre, int date, int price)
+    {
+        if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException("ID не может быть пустым.");
+        if (string.IsNullOrWhiteSpace(title)) throw new ArgumentException("Название не может быть пустым.");
+        if (string.IsNullOrWhiteSpace(author)) throw new ArgumentException("Автор не может быть пустым.");
+        if (price < 0) throw new ArgumentException("Цена не может быть отрицательной.");
+        if (date < 0 || date > DateTime.Now.Year + 1) throw new ArgumentException("Год издания некорректен.");
 
         ID = id;
-        Title = title;
-        Author = author;
+        Title = title.Trim();
+        Author = author.Trim();
         Genre = genre;
         Date = date;
         Price = price;
-}
+    }
+
     public override string ToString()
     {
         return $"Код: {ID}\n" +
                $"Название: {Title}\n" +
                $"Автор: {Author}\n" +
                $"Жанр: {Genre}\n" +
-               $"Дата Издания: {Date}\n" +
-               $"Цена: {Price}\n" +
+               $"Год издания: {Date}\n" +
+               $"Цена: {Price} руб.\n" +
                new string('-', 40);
     }
 }
@@ -57,6 +58,7 @@ class Program
 {
     private static List<Book> products = new List<Book>();
     private static int NextCodeNumber = 1;
+
     static void Main(string[] args)
     {
         InitializeTestData();
@@ -114,6 +116,7 @@ class Program
             products.Add(new Book(GenerateCode(), "Гордость и предубеждение", "Джейн Остен", Genre.Novel, 1813, 190));
             products.Add(new Book(GenerateCode(), "1984", "Джордж Оруэлл", Genre.Antiutopia, 1949, 350));
 
+            // Обновляем счётчик кодов
             NextCodeNumber = products.Count + 1;
         }
         static string GenerateCode()
@@ -185,13 +188,12 @@ class Program
 
             try
             {
-                {
-                    // ✅ Правильный вызов конструктора с 6 аргументами
-                    var book = new Book(code, title, author, selectedGenre, year, price);
-                    products.Add(book);
-                    Console.WriteLine("\nКнига успешно добавлена:");
-                    Console.WriteLine(book);
-                }
+                // ✅ Правильный вызов конструктора с 6 аргументами
+                var book = new Book(code, title, author, selectedGenre, year, price);
+                products.Add(book);
+                Console.WriteLine("\nКнига успешно добавлена:");
+                Console.WriteLine(book);
+            }
             catch (ArgumentException ex)
             {
                 Console.WriteLine($"Ошибка при создании книги: {ex.Message}");
@@ -269,59 +271,100 @@ class Program
                 default:
                     Console.WriteLine("Неверный выбор способа поиска.");
                     return;
-                    if (results.Count == 0)
-                    {
-                        Console.WriteLine("Книги не найдены.");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"\nНайдено книг: {results.Count}");
-                        foreach (var product in results)
-                        {
-                            Console.WriteLine(product);
-                        }
-                    }
             }
-            static void Sort()
+
+            if (results.Count == 0)
             {
-                Console.WriteLine("\n--- СОРТИРОВКА КНИГ ---");
-                Console.WriteLine("1. По названию (А-Я)");
-                Console.WriteLine("2. По году издания (старые → новые)");
-                Console.WriteLine("3. По году издания (новые → старые)");
-                Console.Write("Выберите способ сортировки: ");
-
-                string choice = Console.ReadLine();
-                IEnumerable<Book> sortedBooks = null;
-
-                switch (choice)
+                Console.WriteLine("Книги не найдены.");
+            }
+            else
+            {
+                Console.WriteLine($"\nНайдено книг: {results.Count}");
+                foreach (var product in results)
                 {
-                    case "1":
-                        sortedBooks = products.OrderBy(b => b.Title);
-                        break;
-                    case "2":
-                        sortedBooks = products.OrderBy(b => b.Date);
-                        break;
-                    case "3":
-                        sortedBooks = products.OrderByDescending(b => b.Date);
-                        break;
-                    default:
-                        Console.WriteLine("Неверный выбор.");
-                        return;
-                }
-
-                Console.WriteLine("\nОтсортированный список:");
-                foreach (var book in sortedBooks)
-                {
-                    Console.WriteLine(book);
+                    Console.WriteLine(product);
                 }
             }
-            static void ShowCheapExpensive()
+        }
+        static void Sort()
+        {
+            Console.WriteLine("\n--- СОРТИРОВКА КНИГ ---");
+            Console.WriteLine("1. По названию (А-Я)");
+            Console.WriteLine("2. По году издания (старые → новые)");
+            Console.WriteLine("3. По году издания (новые → старые)");
+            Console.Write("Выберите способ сортировки: ");
+
+            string choice = Console.ReadLine();
+            IEnumerable<Book> sortedBooks = null;
+
+            switch (choice)
             {
-                if (products.Count == 0)
-                {
-                    Console.WriteLine("Список книг пуст.");
+                case "1":
+                    sortedBooks = products.OrderBy(b => b.Title);
+                    break;
+                case "2":
+                    sortedBooks = products.OrderBy(b => b.Date);
+                    break;
+                case "3":
+                    sortedBooks = products.OrderByDescending(b => b.Date);
+                    break;
+                default:
+                    Console.WriteLine("Неверный выбор.");
                     return;
-                }
+            }
+
+            Console.WriteLine("\nОтсортированный список:");
+            foreach (var book in sortedBooks)
+            {
+                Console.WriteLine(book);
+            }
+        }
+        static void ShowCheapExpensive()
+        {
+            if (products.Count == 0)
+            {
+                Console.WriteLine("Список книг пуст.");
+                return;
+            }
+
+            var cheapest = products.OrderBy(b => b.Price).First();
+            var mostExpensive = products.OrderByDescending(b => b.Price).First();
+
+            // Обработка случая, когда все книги одинаковой цены
+            if (cheapest.Price == mostExpensive.Price)
+            {
+                Console.WriteLine("Все книги имеют одинаковую цену:");
+                Console.WriteLine(cheapest);
+                return;
+            }
+
+            Console.WriteLine("\n--- САМАЯ ДЕШЁВАЯ КНИГА ---");
+            Console.WriteLine(cheapest);
+
+            Console.WriteLine("\n--- САМАЯ ДОРОГАЯ КНИГА ---");
+            Console.WriteLine(mostExpensive);
+        }
+        static void GroupBooksByAuthor()
+        {
+            if (products.Count == 0)
+            {
+                Console.WriteLine("Список книг пуст.");
+                return;
+            }
+
+            var grouped = products
+                .GroupBy(b => b.Author)
+                .Select(g => new { Author = g.Key, Count = g.Count() })
+                .OrderByDescending(x => x.Count)
+                .ThenBy(x => x.Author);
+
+            Console.WriteLine("\n--- КНИГИ ПО АВТОРАМ ---");
+            Console.WriteLine("Автор | Количество книг");
+            Console.WriteLine(new string('-', 30));
+
+            foreach (var group in grouped)
+            {
+                Console.WriteLine($"{group.Author} | {group.Count}");
             }
         }
     }
