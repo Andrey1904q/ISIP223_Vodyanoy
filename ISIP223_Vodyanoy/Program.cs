@@ -107,5 +107,14 @@ class Program
         }
 
         static void InitializeTestData()
+        {
+            products.Add(new Book(GenerateCode(), "Властелин колец", "Джон Р. Р. Толкин", Genre.Fantasy, 2023, 250));
+            products.Add(new Book(GenerateCode(), "Вторая жизнь Уве", "Фредрик Бакман", Genre.Prose, 2021, 300));
+            products.Add(new Book(GenerateCode(), "Убить пересмешника", "Харпер Ли", Genre.Classic, 1960, 200));
+            products.Add(new Book(GenerateCode(), "Гордость и предубеждение", "Джейн Остен", Genre.Novel, 1813, 190));
+            products.Add(new Book(GenerateCode(), "1984", "Джордж Оруэлл", Genre.Antiutopia, 1949, 350));
+
+            NextCodeNumber = products.Count + 1;
+        }
     }
 }
