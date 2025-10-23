@@ -269,6 +269,59 @@ class Program
                 default:
                     Console.WriteLine("Неверный выбор способа поиска.");
                     return;
+                    if (results.Count == 0)
+                    {
+                        Console.WriteLine("Книги не найдены.");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"\nНайдено книг: {results.Count}");
+                        foreach (var product in results)
+                        {
+                            Console.WriteLine(product);
+                        }
+                    }
+            }
+            static void Sort()
+            {
+                Console.WriteLine("\n--- СОРТИРОВКА КНИГ ---");
+                Console.WriteLine("1. По названию (А-Я)");
+                Console.WriteLine("2. По году издания (старые → новые)");
+                Console.WriteLine("3. По году издания (новые → старые)");
+                Console.Write("Выберите способ сортировки: ");
+
+                string choice = Console.ReadLine();
+                IEnumerable<Book> sortedBooks = null;
+
+                switch (choice)
+                {
+                    case "1":
+                        sortedBooks = products.OrderBy(b => b.Title);
+                        break;
+                    case "2":
+                        sortedBooks = products.OrderBy(b => b.Date);
+                        break;
+                    case "3":
+                        sortedBooks = products.OrderByDescending(b => b.Date);
+                        break;
+                    default:
+                        Console.WriteLine("Неверный выбор.");
+                        return;
+                }
+
+                Console.WriteLine("\nОтсортированный список:");
+                foreach (var book in sortedBooks)
+                {
+                    Console.WriteLine(book);
+                }
+            }
+            static void ShowCheapExpensive()
+            {
+                if (products.Count == 0)
+                {
+                    Console.WriteLine("Список книг пуст.");
+                    return;
+                }
             }
         }
     }
