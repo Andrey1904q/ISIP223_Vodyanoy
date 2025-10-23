@@ -219,6 +219,57 @@ class Program
             Console.WriteLine($"Товар {product.Title} удалён.");
         }
         static void Research()
+        {
+            Console.WriteLine("\n--- ПОИСК КНИГИ ---");
+            Console.WriteLine("1. По коду");
+            Console.WriteLine("2. По названию");
+            Console.WriteLine("3. По жанру");
+            Console.Write("Выберите способ поиска: ");
+
+            string choice = Console.ReadLine();
+            List<Book> results = new List<Book>();
+
+            switch (choice)
+            {
+                case "1":
+                    Console.Write("Введите код товара: ");
+                    string id = Console.ReadLine()?.Trim();
+                    results = products.Where(p => p.ID == id).ToList();
+                    break;
+
+                case "2":
+                    Console.Write("Введите название товара (или часть названия): ");
+                    string titlePart = Console.ReadLine()?.Trim();
+                    if (!string.IsNullOrEmpty(titlePart))
+                    {
+                        results = products.Where(p => p.Title.Contains(titlePart, StringComparison.OrdinalIgnoreCase)).ToList();
+                    }
+                    break;
+
+                case "3":
+                    Console.WriteLine("Выберите категорию:");
+                    var genres = Enum.GetValues<Genre>();
+                    for (int i = 0; i < genres.Length; i++)
+                    {
+                        Console.WriteLine($"{i + 1}. {genres[i]}");
+                    }
+                    Console.Write("Введите номер жанра: ");
+                    if (int.TryParse(Console.ReadLine(), out int catChoice) && catChoice >= 1 && catChoice <= genres.Length)
+                    {
+                        Genre selectedCategory = genres[catChoice - 1];
+                        results = products.Where(p => p.Genre == selectedCategory).ToList();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Неверный выбор жанра.");
+                        return;
+                    }
+                    break;
+
+                default:
+                    Console.WriteLine("Неверный выбор способа поиска.");
+                    return;
             }
+        }
     }
 }
