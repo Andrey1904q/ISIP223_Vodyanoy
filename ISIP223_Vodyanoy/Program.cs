@@ -116,5 +116,109 @@ class Program
 
             NextCodeNumber = products.Count + 1;
         }
+        static string GenerateCode()
+        {
+            return NextCodeNumber++.ToString();
+        }
+        static void ShowMenu()
+        {
+            Console.WriteLine("=== УЧЁТ КНИГ В БИБЛИОТЕКЕ ===");
+            Console.WriteLine("1. Добавить книгу");
+            Console.WriteLine("2. Удалить книгу");
+            Console.WriteLine("3. Поиск книги");
+            Console.WriteLine("4. Отсортировать книги");
+            Console.WriteLine("5. Показать самую дорогую и самую дешевую книги");
+            Console.WriteLine("6. Сгруппировать книги по авторам и вывести количество книг каждого автора");
+            Console.WriteLine("0. Выход");
+            Console.Write("Выберите действие: ");
+        }
+        static void Add()
+        {
+            Console.WriteLine("\n--- ДОБАВЛЕНИЕ КНИГИ ---");
+
+            Console.Write("Введите название книги: ");
+            string title = Console.ReadLine()?.Trim();
+            if (string.IsNullOrWhiteSpace(title))
+            {
+                Console.WriteLine("Название не может быть пустым.");
+                return;
+            }
+
+            Console.Write("Введите автора книги: ");
+            string author = Console.ReadLine()?.Trim();
+            if (string.IsNullOrWhiteSpace(author))
+            {
+                Console.WriteLine("Имя автора не может быть пустым.");
+                return;
+            }
+
+            Console.WriteLine("Выберите жанр:");
+            var genres = Enum.GetValues<Genre>();
+            for (int i = 0; i < genres.Length; i++)
+            {
+                Console.WriteLine($"{i + 1}. {genres[i]}");
+            }
+
+            Console.Write("Введите номер жанра: ");
+            if (!int.TryParse(Console.ReadLine(), out int catChoice) || catChoice < 1 || catChoice > genres.Length)
+            {
+                Console.WriteLine("Неверный выбор жанра.");
+                return;
+            }
+
+            Console.Write("Введите год издания: ");
+            if (!int.TryParse(Console.ReadLine(), out int year) || year < 0 || year > DateTime.Now.Year + 1)
+            {
+                Console.WriteLine("Год издания должен быть корректным (например, от 1 до 2025).");
+                return;
+            }
+
+            Console.Write("Введите цену книги (в рублях): ");
+            if (!int.TryParse(Console.ReadLine(), out int price) || price < 0)
+            {
+                Console.WriteLine("Цена должна быть неотрицательным целым числом.");
+                return;
+            }
+
+            Genre selectedGenre = genres[catChoice - 1];
+            string code = GenerateCode();
+
+            try
+            {
+                {
+                    // ✅ Правильный вызов конструктора с 6 аргументами
+                    var book = new Book(code, title, author, selectedGenre, year, price);
+                    products.Add(book);
+                    Console.WriteLine("\nКнига успешно добавлена:");
+                    Console.WriteLine(book);
+                }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Ошибка при создании книги: {ex.Message}");
+            }
+        }
+        static void Delete()
+        {
+            Console.WriteLine("\n--- УДАЛЕНИЕ КНИГИ ---");
+            Console.WriteLine("Существующие коды:");
+            foreach (var p in products)
+            {
+                Console.WriteLine($" - {p.ID} ({p.Title})");
+            }
+            Console.WriteLine("Введите код товара для удаления: ");
+
+            string id = Console.ReadLine()?.Trim();
+
+            var product = products.FirstOrDefault(p => p.ID == id);
+            if (product == null)
+            {
+                Console.WriteLine("Товар не найден.");
+                return;
+            }
+            products.Remove(product);
+            Console.WriteLine($"Товар {product.Title} удалён.");
+        }
+        static void Research()
+            }
     }
 }
